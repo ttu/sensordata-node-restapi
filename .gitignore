@@ -1,4 +1,5 @@
 dist
+iot_db.sqlite
 
 # Logs
 logs

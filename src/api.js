@@ -18,4 +18,5 @@ export default (app, store, passport, auth) => {
         const data = await store.get();
         res.send(data);
     });
-}
+    
+};

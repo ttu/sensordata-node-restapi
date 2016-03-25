@@ -7,7 +7,7 @@
     "start": "nodemon src/app.js --exec babel-node",
     "build": "babel src -d dist",
     "serve": "node dist/app.js",
-    "test": "mocha --compilers js:babel-register"
+    "test": "mocha -t 5000 --compilers js:babel-register"
   },
   "author": "Tomi Tuhkanen",
   "license": "ISC",
