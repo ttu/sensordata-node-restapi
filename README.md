@@ -25,6 +25,3 @@ curl -L -b headers 127.0.0.1:1337/data
 * https://github.com/jaredhanson/passport-local
 
 ## Knex
-
-* Dev
-    * npm install sqlite3 --savedev

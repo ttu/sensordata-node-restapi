@@ -1,6 +1,10 @@
+
+// https://strongloop.com/strongblog/async-error-handling-expressjs-es7-promises-generators/
+let wrap = fn => (...args) => fn(...args).catch(args[2])
+
 export default (app, store, passport, auth) => {
 
-    app.get('/', function(req, res) {
+    app.get('/', (req, res) => {
         res.writeHead(200, { 'Content-Type': 'text/plain' });
         res.end('Hello World!');
     });
@@ -14,9 +18,8 @@ export default (app, store, passport, auth) => {
         res.redirect('/');
     });
 
-    app.get('/data', auth, async (req, res) => {
+    app.get('/data', auth, wrap(async (req, res) => {      
         const data = await store.get();
         res.send(data);
-    });
-    
+    })); 
 };
