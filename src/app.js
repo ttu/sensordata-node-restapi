@@ -33,7 +33,10 @@ const authMiddleware = env === "dev"
     : (req, res, next) => req.isAuthenticated() ? next() : res.sendStatus(401);
     //: ensureLogin.ensureLoggedIn();
 
-defineRoutes(app, store, passport, authMiddleware);
+const router = express.Router();
+defineRoutes(router, store, passport, authMiddleware);
+
+app.use('/api', router);
 
 const server = app.listen(1337, () => {
     console.log('Server started on port %s', server.address().port);
