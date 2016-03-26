@@ -8,7 +8,7 @@ import Store from './store';
 import initPassport from './passport';
 // import ensureLogin from 'connect-ensure-login';
 
-const env = "auth";
+const env = process.env.NODE_ENV || "production";
 
 const app = express();
 
@@ -28,7 +28,7 @@ const authFunc = (username, password, done) => {
 
 const passport = initPassport(app, authFunc);
 
-const authMiddleware = env === "dev"
+const authMiddleware = env === "development"
     ? (req, res, next) => next()
     : (req, res, next) => req.isAuthenticated() ? next() : res.sendStatus(401);
     //: ensureLogin.ensureLoggedIn();
@@ -38,6 +38,8 @@ defineRoutes(router, store, passport, authMiddleware);
 
 app.use('/api', router);
 
-const server = app.listen(1337, () => {
+const port = process.env.PORT || 8000;
+
+const server = app.listen(port, () => {
     console.log('Server started on port %s', server.address().port);
 });

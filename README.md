@@ -8,8 +8,8 @@ Rest api for sensor data.
 1. npm start
 1. POST /login (admin/admin)
 ```sh
-curl -d "username=admin&password=admin" --dump-header headers 127.0.0.1:1337/api/login
-curl -L -b headers 127.0.0.1:1337/api/data
+curl -d "username=admin&password=admin" --dump-header headers 127.0.0.1:8080/api/login
+curl -L -b headers 127.0.0.1:8080/api/data
 ```
 
 ## Babel
