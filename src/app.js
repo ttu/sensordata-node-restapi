@@ -15,7 +15,7 @@ const app = express();
 app.use(morgan('combined'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(expressSession({ secret: 'sensor-key-data', resave: false, saveUninitialized: false }));
 
 const store = new Store();
 
@@ -37,6 +37,12 @@ const router = express.Router();
 defineRoutes(router, store, passport, authMiddleware);
 
 app.use('/api', router);
+
+// Use Swagger UI only in dev
+if (env === "development") {
+    app.use('/api_docs', express.static('./api_docs'));
+    app.use('/swagger', express.static('./node_modules/swagger-ui/dist'));
+}
 
 const port = process.env.PORT || 8000;
 

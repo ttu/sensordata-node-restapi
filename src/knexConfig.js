@@ -6,9 +6,9 @@ export default {
         }
     },
     production: {
-        client: 'postgresql',
+        client: 'mssql',
         connection: {
-            database: 'example'
+            database: 'iot_db'
         },
         pool: {
             min: 2,

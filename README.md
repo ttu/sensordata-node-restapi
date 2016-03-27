@@ -6,10 +6,17 @@ Rest api for sensor data.
     * src/knexConfig.js has the path to database
 1. npm install
 1. npm start
-1. POST /login (admin/admin)
+
+### Developement
+
+Swagger UI: <http://localhost:8080/swagger/?url=http://localhost:8080/api_docs/swagger.yaml>
+
+### Production
+
+Production requires authentication POST /login (admin/admin)
 ```sh
 curl -d "username=admin&password=admin" --dump-header headers 127.0.0.1:8080/api/login
-curl -L -b headers 127.0.0.1:8080/api/data
+curl -L -b headers 127.0.0.1:8080/api/sensors
 ```
 
 ## Babel
@@ -48,3 +55,11 @@ curl -L -b headers 127.0.0.1:8080/api/data
   }
 ]
 ```
+
+## Swagger
+
+Use Editor to edit/validate yaml files: <http://editor.swagger.io/#/>
+
+* https://github.com/swagger-api/swagger-node
+* https://github.com/shawngong/Swagger-Node-Express-For-Existing-APIs
+* http://stackoverflow.com/questions/31300756/can-swagger-autogenerate-its-yaml-based-on-existing-express-routes

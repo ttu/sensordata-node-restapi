@@ -1,0 +1,78 @@
+swagger: '2.0'
+info:
+  title: Sensordata API
+  description: Get sensor data
+  version: 1.0.0
+host: localhost:8080
+schemes:
+  - http
+basePath: /api
+produces:
+  - application/json
+paths:
+  /sensors:
+    get:
+      summary: Get all sensor ids
+      responses:
+        '200':
+          description: List of sensor ids in the database
+  /{sensor_id}:
+    get:
+      summary: Return rows for selected sensor
+      responses:
+        '200':
+          description: Rows of sensor data
+      parameters:
+        -
+          name: "sensor_id"
+          in: "path"
+          description: "Id of selected sensro"
+          required: true
+          type: "string"
+        -
+          name: "take"
+          in: "query"
+          description: "Number of rows to return"
+          required: false
+          type: number
+          format: integer
+        -
+          name: "skip"
+          in: "query"
+          description: "Number of rows to skip"
+          required: false
+          type: number
+          format: integer
+  /avg/{field_id}/{sensor_id}:
+    get:
+      summary: Return average value for selected data
+      responses:
+        '200':
+          description: Average value
+      parameters:
+        -
+          name: "field_id"
+          in: "path"
+          description: "Selected field"
+          required: true
+          type: "string"
+          enum: 
+            - temperature
+            - pressure
+            - humidity
+            - voc
+            - light
+            - humidity
+        -
+          name: "sensor_id"
+          in: "path"
+          description: "Id of selected sensro"
+          required: true
+          type: "string"
+        -
+          name: "minutes"
+          in: "query"
+          description: "Duration where average is calculated"
+          required: false
+          type: number
+          format: integer

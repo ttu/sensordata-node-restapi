@@ -7,7 +7,7 @@
     "start": "cross-env PORT=8080 NODE_ENV=development nodemon src/app.js --exec babel-node",
     "build": "babel src -d dist",
     "serve": "node dist/app.js",
-    "test": "mocha -t 5000 --compilers js:babel-register"
+    "test": "cross-env PORT=1337 NODE_ENV=test mocha -t 5000 --compilers js:babel-register"
   },
   "author": "Tomi Tuhkanen",
   "license": "ISC",
@@ -21,7 +21,8 @@
     "cross-env": "^1.0.7",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",
-    "sqlite3": "^3.1.2"
+    "sqlite3": "^3.1.2",
+    "swagger-ui": "^2.1.4"
   },
   "dependencies": {
     "body-parser": "^1.15.0",
@@ -32,6 +33,7 @@
     "knex": "^0.10.0",
     "moment": "^2.12.0",
     "morgan": "^1.7.0",
+    "mssql": "^3.1.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0"
   }

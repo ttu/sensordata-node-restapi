@@ -15,14 +15,16 @@ export default (router, store, passport, auth) => {
 
     router.post('/login', passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/' }));
 
-    router.get('/data', auth, wrap(async (req, res) => {
-        const data = await store.get();
+    router.get('/sensors', auth, wrap(async (req, res) => {
+        const data = await store.getSensorIds();
         res.send(data);
     }));
 
     router.get('/:sensor_id', auth, wrap(async (req, res) => {
         const id = req.params.sensor_id;
-        const data = await store.get(id, 1);
+        const skip = req.query.skip || 0;
+        const take = req.query.take || 1;
+        const data = await store.get(id, take, skip);
         res.send(data);
     }));
 
