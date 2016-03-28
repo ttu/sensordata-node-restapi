@@ -26,7 +26,8 @@ class Store {
 
     async getSensorIds() {
         const query = knex('cubesensors_data').distinct('SensorId').select();
-        return await callAsync(query);
+        var data = await callAsync(query);
+        return data.map(s => s.SensorId);
     }
 
     async get(sensorId, take = 1, skip = 0) {

@@ -5,6 +5,7 @@
   "main": "app.js",
   "scripts": {
     "start": "cross-env PORT=8080 NODE_ENV=development nodemon src/app.js --exec babel-node",
+    "debug": "cross-env PORT=8080 NODE_ENV=development nodemon src/app.js --exec babel-node --debug",
     "build": "babel src -d dist",
     "serve": "node dist/app.js",
     "test": "cross-env PORT=1337 NODE_ENV=test mocha -t 5000 --compilers js:babel-register"

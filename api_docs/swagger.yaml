@@ -16,7 +16,11 @@ paths:
       responses:
         '200':
           description: List of sensor ids in the database
-  /{sensor_id}:
+          schema:
+            type: array
+            items:
+              type: string
+  /sensors/{sensor_id}:
     get:
       summary: Return rows for selected sensor
       responses:
@@ -24,25 +28,27 @@ paths:
           description: Rows of sensor data
       parameters:
         -
-          name: "sensor_id"
-          in: "path"
-          description: "Id of selected sensro"
+          name: sensor_id
+          in: path
+          description: Id of selected sensor
           required: true
           type: "string"
         -
-          name: "take"
-          in: "query"
-          description: "Number of rows to return"
+          name: take
+          in: query
+          description: Number of rows to return
           required: false
           type: number
           format: integer
+          default: 1
         -
-          name: "skip"
-          in: "query"
-          description: "Number of rows to skip"
+          name: skip
+          in: query
+          description: Number of rows to skip
           required: false
           type: number
           format: integer
+          default: 0
   /avg/{field_id}/{sensor_id}:
     get:
       summary: Return average value for selected data
@@ -51,11 +57,11 @@ paths:
           description: Average value
       parameters:
         -
-          name: "field_id"
-          in: "path"
-          description: "Selected field"
+          name: field_id
+          in: path
+          description: Selected field
           required: true
-          type: "string"
+          type: string
           enum: 
             - temperature
             - pressure
@@ -64,15 +70,16 @@ paths:
             - light
             - humidity
         -
-          name: "sensor_id"
-          in: "path"
-          description: "Id of selected sensro"
+          name: sensor_id
+          in: path
+          description: Id of selected sensor
           required: true
-          type: "string"
+          type: string
         -
-          name: "minutes"
-          in: "query"
-          description: "Duration where average is calculated"
+          name: minutes
+          in: query
+          description: Duration where average is calculated
           required: false
           type: number
           format: integer
+          default: 60

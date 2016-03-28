@@ -1,6 +1,6 @@
 
 // https://strongloop.com/strongblog/async-error-handling-expressjs-es7-promises-generators/
-let wrap = fn => (...args) => fn(...args).catch(args[2])
+let wrap = fn => (...args) => fn(...args).catch(args[2]);
 
 export default (router, store, passport, auth) => {
 
@@ -20,7 +20,7 @@ export default (router, store, passport, auth) => {
         res.send(data);
     }));
 
-    router.get('/:sensor_id', auth, wrap(async (req, res) => {
+    router.get('/sensors/:sensor_id', auth, wrap(async (req, res) => {
         const id = req.params.sensor_id;
         const skip = req.query.skip || 0;
         const take = req.query.take || 1;
