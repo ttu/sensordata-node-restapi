@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   title: Sensordata API
-  description: Get sensor data
+  description: REST API for Cubesensor data
   version: 1.0.0
 host: localhost:8080
 schemes:
@@ -20,9 +20,38 @@ paths:
             type: array
             items:
               type: string
-  /sensors/{sensor_id}:
+  /status:
     get:
-      summary: Return rows for selected sensor
+      summary: Get latest knows status for each sensor
+      responses:
+        '200':
+          description: List of sensor statuses
+  /data:
+    get:
+      summary: Get rows for all sensors
+      responses:
+        '200':
+          description: Rows of sensor data
+      parameters:
+        -
+          name: take
+          in: query
+          description: Number of rows to return
+          required: false
+          type: number
+          format: integer
+          default: 1
+        -
+          name: skip
+          in: query
+          description: Number of rows to skip
+          required: false
+          type: number
+          format: integer
+          default: 0
+  /data/{sensor_id}:
+    get:
+      summary: Get rows for selected sensor
       responses:
         '200':
           description: Rows of sensor data
@@ -32,7 +61,7 @@ paths:
           in: path
           description: Id of selected sensor
           required: true
-          type: "string"
+          type: string
         -
           name: take
           in: query
@@ -51,7 +80,7 @@ paths:
           default: 0
   /avg/{field_id}/{sensor_id}:
     get:
-      summary: Return average value for selected data
+      summary: Get average value for selected data
       responses:
         '200':
           description: Average value
@@ -68,7 +97,7 @@ paths:
             - humidity
             - voc
             - light
-            - humidity
+            - noise
         -
           name: sensor_id
           in: path

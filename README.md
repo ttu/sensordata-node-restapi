@@ -7,7 +7,7 @@ Rest api for sensor data.
 1. npm install
 1. npm start
 
-### Developement
+### Development
 
 Swagger UI: <http://localhost:8080/swagger/?url=http://localhost:8080/api_docs/swagger.yaml>
 

@@ -20,17 +20,43 @@ function callAsync(func) {
 };
 
 class Store {
-    async get() {
-        return await callAsync(knex.raw('SELECT * FROM cubesensors_data LIMIT 1'));
+    async getCount() {
+        const count = await callAsync(knex('cubesensors_data').count());
+        return count[0]['count(*)'];
+    }
+
+    async getAllData(take = 1, skip = 0) {
+        const query =
+            knex.select('*').from('cubesensors_data')
+                .orderBy('MeasurementTime', 'desc')
+                .limit(take).offset(skip);
+
+        return await callAsync(query);
     }
 
     async getSensorIds() {
         const query = knex('cubesensors_data').distinct('SensorId').select();
-        var data = await callAsync(query);
+        const data = await callAsync(query);
         return data.map(s => s.SensorId);
     }
 
-    async get(sensorId, take = 1, skip = 0) {
+    async getSensorStatuses() {
+        const idQuery = await callAsync(knex('cubesensors_data').distinct('SensorId').select());
+
+        // Maybe there is a better way to do this on db with one query..
+        const promises = idQuery.map(i => {
+            const query = knex.select('*').from('cubesensors_data')
+                .where('SensorId', i.SensorId)
+                .orderBy('MeasurementTime', 'desc')
+                .limit(1).offset(0);
+            return callAsync(query);
+        });
+
+        const values = await Promise.all(promises);
+        return values.reduce((prev, curr) => prev.concat(curr));
+    }
+
+    async getSensorData(sensorId, take = 1, skip = 0) {
         // const query = knex.raw('SELECT Temperature FROM cubesensors_data WHERE SensorId = ? ORDER BY MeasurementTime LIMIT ?, ?', [sensorId, skip, take]);
         const query =
             knex.select('*').from('cubesensors_data')

@@ -20,11 +20,23 @@ export default (router, store, passport, auth) => {
         res.send(data);
     }));
 
-    router.get('/sensors/:sensor_id', auth, wrap(async (req, res) => {
+    router.get('/status', auth, wrap(async (req, res) => {
+        const data = await store.getSensorStatuses();
+        res.send(data);
+    }));
+    
+    router.get('/data', auth, wrap(async (req, res) => {
+        const skip = req.query.skip || 0;
+        const take = req.query.take || 1;
+        const data = await store.getAllData(take, skip);
+        res.send(data);
+    }));
+
+    router.get('/data/:sensor_id', auth, wrap(async (req, res) => {
         const id = req.params.sensor_id;
         const skip = req.query.skip || 0;
         const take = req.query.take || 1;
-        const data = await store.get(id, take, skip);
+        const data = await store.getSensorData(id, take, skip);
         res.send(data);
     }));
 
@@ -32,7 +44,7 @@ export default (router, store, passport, auth) => {
         const sensorId = req.params.sensor_id;
         const field = req.params.field_id;
         const minutes = req.query.minutes || 60;
-        
+
         const data = await store.getAvg(sensorId, field, minutes);
         res.send(data);
     })); 
