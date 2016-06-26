@@ -1,5 +1,6 @@
 keys.js
 
+typings/
 
 dist
 iot_db.sqlite
