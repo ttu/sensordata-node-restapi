@@ -3,6 +3,9 @@ import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
 import expressSession from 'express-session';
+import socketio from 'socket.io';
+import moment from 'moment';
+
 import defineRoutes from './api';
 import Store from './store';
 import initPassport from './passport';
@@ -11,7 +14,6 @@ import initPassport from './passport';
 const env = process.env.NODE_ENV || "production";
 
 const app = express();
-
 app.use(morgan('combined'));
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,6 +39,7 @@ const router = express.Router();
 defineRoutes(router, store, passport, authMiddleware);
 
 app.use('/api', router);
+app.use(express.static('./public'));
 
 // Use Swagger UI only in dev
 if (env === "development") {
@@ -49,3 +52,21 @@ const port = process.env.PORT || 8000;
 const server = app.listen(port, () => {
     console.log('Server started on port %s', server.address().port);
 });
+
+const io = socketio(server);
+
+io.on('connection', (socket) => {
+    console.log('a socket connected');
+});
+
+let checkTime = moment();
+
+setInterval(async () => {
+    // TODO: Get only new statuses from db
+    const statuses = await store.getSensorStatuses();
+    const newStatuses = statuses.filter(s => moment(s.MeasurementTime).isAfter(checkTime));
+    newStatuses.forEach(s => {
+        io.emit('message', `${s.SensorId} - ${s.Temperature}`);
+    });
+    checkTime = moment();
+}, 15000);
