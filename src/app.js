@@ -64,9 +64,10 @@ let checkTime = moment();
 setInterval(async () => {
     // TODO: Get only new statuses from db
     const statuses = await store.getSensorStatuses();
-    const newStatuses = statuses.filter(s => moment(s.MeasurementTime).isAfter(checkTime));
+    const newStatuses = statuses.filter(s => moment(s.MeasurementTime).isAfter(checkTime));    
+    checkTime = statuses.reduce((s,e) => moment(s).isAfter(moment(e.MeasurementTime)) ? s : moment(e.MeasurementTime));
+
     newStatuses.forEach(s => {
         io.emit('message', `${s.SensorId} - ${s.Temperature}`);
     });
-    checkTime = moment();
 }, 15000);
