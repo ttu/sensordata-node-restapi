@@ -1,0 +1,12 @@
+{
+  "globalDependencies": {
+    "express": "registry:dt/express#4.0.0+20160317120654",
+    "knex": "registry:dt/knex#0.0.0+20160621184816",
+    "mocha": "registry:dt/mocha#2.2.5+20160619032855",
+    "moment": "registry:dt/moment#2.8.0+20160316155526",
+    "mssql": "registry:dt/mssql#3.1.0+20160412134559",
+    "node": "registry:dt/node#6.0.0+20160621231320",
+    "passport": "registry:dt/passport#0.2.0+20160317120654",
+    "passport-local": "registry:dt/passport-local#0.0.0+20160316155526"
+  }
+}
