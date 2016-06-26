@@ -18,6 +18,16 @@ Production requires authentication POST /login (admin/admin)
 curl -d "username=admin&password=admin" --dump-header headers 127.0.0.1:8080/api/login
 curl -L -b headers 127.0.0.1:8080/api/sensors
 ```
+* Add keys.js file to src folder with correct parameters for production databse
+
+```js
+export default {
+    host     : '127.0.0.1',
+    user     : 'your_database_user',
+    password : 'your_database_password',
+    database : 'myapp_test'
+};
+```
 
 ## Babel
 * https://github.com/babel/example-node-server

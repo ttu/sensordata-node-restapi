@@ -1,3 +1,5 @@
+import keys from './keys';
+
 export default {
     development: {
         client: 'sqlite3',
@@ -8,7 +10,13 @@ export default {
     production: {
         client: 'mssql',
         connection: {
-            database: 'iot_db'
+            host: keys.host,
+            database: keys.database,
+            user: keys.user,
+            password: keys.password,
+            options: {
+                encrypt: true // Use this if you're on Windows Azure 
+            }
         },
         pool: {
             min: 2,
