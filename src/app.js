@@ -9,6 +9,8 @@ import moment from 'moment';
 import defineRoutes from './api';
 import Store from './store';
 import initPassport from './passport';
+import keys from './keys';
+
 // import ensureLogin from 'connect-ensure-login';
 
 const env = process.env.NODE_ENV || "production";
@@ -22,8 +24,8 @@ app.use(expressSession({ secret: 'sensor-key-data', resave: false, saveUninitial
 const store = new Store();
 
 const authFunc = (username, password, done) => {
-    if (username === "admin" && password === "admin")
-        return done(null, { name: "admin" });
+    if (username === keys.loginUser && password === keys.loginPassword)
+        return done(null, { name: keys.loginUser });
 
     return done(null, false, { message: 'Incorrect username.' });
 };
