@@ -13,19 +13,21 @@ Swagger UI: <http://localhost:8080/swagger/?url=http://localhost:8080/api_docs/s
 
 ### Production
 
-Production requires authentication POST /login (admin/admin)
+Production requires authentication POST /login (username and password from keys.js file)
 ```sh
 curl -d "username=admin&password=admin" --dump-header headers 127.0.0.1:8080/api/login
 curl -L -b headers 127.0.0.1:8080/api/sensors
 ```
-* Add keys.js file to src folder with correct parameters for production databse
+* Add keys.js file to src folder with correct parameters for production database and application login credentials
 
 ```js
 export default {
-    host     : '127.0.0.1',
-    user     : 'your_database_user',
-    password : 'your_database_password',
-    database : 'myapp_test'
+    host          : '127.0.0.1',
+    user          : 'your_database_user',
+    password      : 'your_database_password',
+    database      : 'myapp_test',
+    loginUser     : 'admin',
+    loginPassword : 'admin 
 };
 ```
 
@@ -73,3 +75,25 @@ Use Editor to edit/validate yaml files: <http://editor.swagger.io/#/>
 * https://github.com/swagger-api/swagger-node
 * https://github.com/shawngong/Swagger-Node-Express-For-Existing-APIs
 * http://stackoverflow.com/questions/31300756/can-swagger-autogenerate-its-yaml-based-on-existing-express-routes
+
+## Azure deployment
+
+* Build (npm run build)
+* Copy dist folder content to selected folder
+
+```sh
+# Install Azure CLI
+npm install -g azure-cli
+# Login to Azure
+azure config mode asm
+azure login
+# Create site
+azure site create --git {appname}
+# Update files
+git add .
+git commit -m "files"
+git push azure master
+```
+
+* Turn on Web Sockets from Application Settings (go to portal.azure.com)
+
