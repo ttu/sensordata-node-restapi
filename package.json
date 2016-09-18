@@ -4,10 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "cross-env PORT=8080 NODE_ENV=development nodemon src/app.js --exec babel-node",
+    "start": "node ./node_modules/babel-cli/bin/babel-node.js src/app.js",
     "debug": "cross-env PORT=8080 NODE_ENV=development nodemon src/app.js --exec babel-node --debug",
     "build": "babel src -d dist",
     "serve": "node dist/app.js",
+    "clean": "rm -rf build && mkdir build",
     "test": "cross-env PORT=1337 NODE_ENV=test mocha -t 10000 --compilers js:babel-register"
   },
   "author": "Tomi Tuhkanen",
