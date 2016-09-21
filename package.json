@@ -7,7 +7,7 @@
     "start": "node app.js",
     "dev": "cross-env PORT=8080 NODE_ENV=development nodemon src/app.js --exec babel-node",
     "debug": "cross-env PORT=8080 NODE_ENV=development nodemon src/app.js --exec babel-node --debug",
-    "build": "babel src -d dist -s && copy package.json dist && cd dist && mkdir public && cd .. && cp public/index.html dist/public/",
+    "build": "npm run clean && babel src -d dist -s && copy package.json dist && cd dist && mkdir public && mkdir api_docs && cd .. && cp public/index.html dist/public/ && cp api_docs/swagger.yaml dist/api_docs/",
     "serve": "node dist/app.js",
     "clean": "rm -rf dist && mkdir dist",
     "test": "cross-env PORT=1337 NODE_ENV=test mocha -t 10000 --compilers js:babel-register"
@@ -23,8 +23,7 @@
     "cross-env": "^1.0.7",
     "mocha": "^2.4.5",
     "nodemon": "^1.9.1",
-    "sqlite3": "^3.1.2",
-    "swagger-ui": "^2.1.4"
+    "sqlite3": "^3.1.2"
   },
   "dependencies": {
     "babel-runtime": "^6.6.1",    
@@ -39,6 +38,7 @@
     "mssql": "^3.1.2",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "socket.io": "^1.4.8"
+    "socket.io": "^1.4.8",
+    "swagger-ui": "^2.1.4"    
   }
 }

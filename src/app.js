@@ -43,11 +43,8 @@ defineRoutes(router, store, passport, authMiddleware);
 app.use('/api', router);
 app.use(express.static('./public'));
 
-// Use Swagger UI only in dev
-if (env === "development") {
-    app.use('/api_docs', express.static('./api_docs'));
-    app.use('/swagger', express.static('./node_modules/swagger-ui/dist'));
-}
+app.use('/api_docs', express.static('./api_docs'));
+app.use('/swagger', express.static('./node_modules/swagger-ui/dist'));
 
 const port = process.env.PORT || 8000;
 

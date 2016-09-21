@@ -59,6 +59,11 @@ export default {
 ## Azure deployment
 
 * Build (npm run build)
+* Update host from dist/api_docs/swagger.yaml
+```yaml
+host: example.some.com
+```
+
 * Copy dist folder content to selected folder
 
 ```sh
