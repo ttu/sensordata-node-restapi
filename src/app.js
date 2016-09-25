@@ -11,20 +11,19 @@ import Store from './store';
 import initPassport from './passport';
 import config from './config';
 
-// import ensureLogin from 'connect-ensure-login';
-
 const env = process.env.NODE_ENV || "production";
 
 const app = express();
 app.use(morgan('combined'));
 app.use(cookieParser());
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(expressSession({ secret: 'sensor-key-data', resave: false, saveUninitialized: false }));
 
 const store = new Store();
 
 const authFunc = (username, password, done) => {
-    console.log(`username: ${username} - password: ${password}`);
+    // console.log(`username: ${username} - password: ${password}`);
     if (username === config.loginUser && password === config.loginPassword)
         return done(null, { name: config.loginUser });
 
@@ -74,3 +73,5 @@ setInterval(async () => {
         io.emit('message', `${s.SensorId} - ${s.Temperature}`);
     });
 }, 15000);
+
+export default app;

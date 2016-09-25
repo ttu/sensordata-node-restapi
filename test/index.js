@@ -1,20 +1,23 @@
-import http from 'http';
 import assert from 'assert';
+import request from 'supertest';
 
-import '../src/app.js';
+import config from  '../src/config'
+import app from '../src/app.js';
 
 describe('API test', () => {
   it('should return 200', done => {
-    http.get('http://127.0.0.1:1337/api/', res => {
-      assert.equal(200, res.statusCode);
-      done();
-    });
+    request(app)
+      .get('/api/sensors')
+      .set('Accept', 'application/json')
+      .auth(config.loginUser, config.loginPassword)
+      .expect('Content-Type', /json/)
+      .expect(200, done);
   });
 
   it('should return 401', done => {
-    http.get('http://127.0.0.1:1337/api/sensors', res => {
-      assert.equal(401, res.statusCode);
-      done();
-    });
+    request(app)
+      .get('/api/sensors')
+      .set('Accept', 'application/json')
+      .expect(401, done);
   });
 });
