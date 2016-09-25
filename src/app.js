@@ -9,7 +9,7 @@ import moment from 'moment';
 import defineRoutes from './api';
 import Store from './store';
 import initPassport from './passport';
-import keys from './keys';
+import config from './config';
 
 // import ensureLogin from 'connect-ensure-login';
 
@@ -24,18 +24,22 @@ app.use(expressSession({ secret: 'sensor-key-data', resave: false, saveUninitial
 const store = new Store();
 
 const authFunc = (username, password, done) => {
-    if (username === keys.loginUser && password === keys.loginPassword)
-        return done(null, { name: keys.loginUser });
+    console.log(`username: ${username} - password: ${password}`);
+    if (username === config.loginUser && password === config.loginPassword)
+        return done(null, { name: config.loginUser });
 
     return done(null, false, { message: 'Incorrect username.' });
 };
 
 const passport = initPassport(app, authFunc);
 
-const authMiddleware = env === "development"
+const authMidFunc = config.auth == 'local' 
+    ? passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/' })
+    : passport.authenticate('basic', { session: false });
+
+const authMiddleware = env === "development" 
     ? (req, res, next) => next()
-    : (req, res, next) => req.isAuthenticated() ? next() : res.sendStatus(401);
-    //: ensureLogin.ensureLoggedIn();
+    : authMidFunc;
 
 const router = express.Router();
 defineRoutes(router, store, passport, authMiddleware);

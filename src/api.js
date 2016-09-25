@@ -13,7 +13,7 @@ export default (router, store, passport, auth) => {
         res.send('this is login page');
     });
 
-    router.post('/login', passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/' }));
+    router.post('/login', auth);
 
     router.get('/sensors', auth, wrap(async (req, res) => {
         const data = await store.getSensorIds();

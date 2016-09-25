@@ -5,7 +5,7 @@ Rest api for sensor data.
 ### Development
 
 * unpack iot_db.7z (iot_db.sqlite) to root folder
-    * src/knexConfig.js has the path to development database
+    * src/config.js has the path to development database
 
 ```sh
 $ npm install
@@ -16,8 +16,11 @@ Swagger UI: <http://localhost:8080/swagger/?url=http://localhost:8080/api_docs/s
 
 ### Production
 
-Production requires authentication POST /login (e.g. with admin/admin)
+Production requires authentication. Supports local or http authentication. Authentication type (http/local) can be configured from src/config.js 
 ```sh
+# Http Authentication
+curl -u admin:admin 127.0.0.1:8080/api/sensors
+# Local Authentication
 $ curl -d "username=admin&password=admin" --dump-header headers 127.0.0.1:8080/api/login
 $ curl -L -b headers 127.0.0.1:8080/api/sensors
 ```

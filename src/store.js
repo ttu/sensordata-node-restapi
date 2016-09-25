@@ -1,12 +1,13 @@
 import Knex from 'knex';
-import config from './knexConfig';
 import moment from 'moment';
+
+import config from './config';
 
 const env = process.env.NODE_ENV || "production";
 
 const knex = env === "production"
-    ? Knex(config.production)
-    : Knex(config.development);
+    ? Knex(config.db.production)
+    : Knex(config.db.development);
 
 function callAsync(func) {
     return new Promise(function(resolve, reject) {
