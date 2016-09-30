@@ -5,7 +5,8 @@
   "main": "app.js",
   "scripts": {
     "start": "node app.js",
-    "dev": "cross-env PORT=8080 NODE_ENV=development nodemon src/app.js --exec babel-node",
+    "dev": "cross-env PORT=8080 NODE_ENV=development AUTH=off nodemon src/app.js --exec babel-node",
+    "dev_auth": "cross-env PORT=8080 NODE_ENV=development AUTH=on nodemon src/app.js --exec babel-node",    
     "debug": "cross-env PORT=8080 NODE_ENV=development nodemon src/app.js --exec babel-node --debug",
     "build": "npm run clean && babel src -d dist -s && copy package.json dist && cd dist && mkdir public && mkdir api_docs && cd .. && cp public/index.html dist/public/ && cp api_docs/swagger.yaml dist/api_docs/",
     "serve": "node dist/app.js",

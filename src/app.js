@@ -12,6 +12,7 @@ import initPassport from './passport';
 import config from './config';
 
 const env = process.env.NODE_ENV || "production";
+const auth = process.env.AUTH || "on";
 
 const app = express();
 app.use(morgan('combined'));
@@ -36,7 +37,7 @@ const authMidFunc = config.auth == 'local'
     ? passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/' })
     : passport.authenticate('basic', { session: false });
 
-const authMiddleware = env === "development" 
+const authMiddleware = env === "development" && auth === "off"
     ? (req, res, next) => next()
     : authMidFunc;
 
@@ -63,7 +64,7 @@ io.on('connection', (socket) => {
 
 let checkTime = moment();
 
-setInterval(async () => {
+async function sendNewStauses() {
     // TODO: Get only new statuses from db
     const statuses = await store.getSensorStatuses();
     const newStatuses = statuses.filter(s => moment(s.MeasurementTime).isAfter(checkTime));    
@@ -72,6 +73,17 @@ setInterval(async () => {
     newStatuses.forEach(s => {
         io.emit('message', `${s.SensorId} - ${s.Temperature}`);
     });
-}, 15000);
+};
+
+let devTemp = 20;
+
+const ioFunc = env === "development"
+    ? () => {
+        devTemp += Math.random() * 0.02 * (Math.random() < 0.5 ? -1 : 1);
+        io.emit('message', `000D6F0003141E14 - ${devTemp}`) 
+        }
+    : sendNewStauses
+
+setInterval(ioFunc, 15000);
 
 export default app;
