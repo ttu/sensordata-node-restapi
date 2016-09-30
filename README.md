@@ -58,6 +58,20 @@ export default {
   }
 ]
 ```
+## APIs
+
+```sh
+# Take specified data points for selected sensor
+$ curl "localhost:8080/api/data/000D6F0003141E14?skip=0&take=2"
+# Take specified data points
+$ curl "localhost:8080/api/data?skip=0&take=2"
+# Latest data point for each sensor
+$ curl "localhost:8080/api/status"
+# List of sensors
+$ curl "localhost:8080/api/sensors"
+# Average for specified field from last x minutes (latest data is from the beginning of 2016, so minutes must be high)
+$ curl "localhost:8080/api/avg/Temperature/000D6F0003141E14?minutes=1440000"
+```
 
 ## Azure deployment
 
