@@ -14,7 +14,6 @@ function callAsync(func) {
         func.then(function(resp) {
             resolve(resp);
         }).catch(function(err) {
-            console.log(err);
             reject(err);
         });
     });
