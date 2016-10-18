@@ -18,6 +18,7 @@ export default {
                 database: keys.database,
                 user: keys.user,
                 password: keys.password,
+                requestTimeout: 30000,
                 options: {
                     encrypt: true // Use this if you're on Windows Azure 
                 }
