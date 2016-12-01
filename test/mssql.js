@@ -17,7 +17,7 @@ describe('MSSQL', () => {
     it('should connect with values from keys', (done) => {
 
         // This tests are for tesing MSSQL connections. Do not run automatically.
-        if (process.env.NODE_ENV == 'test') done();
+        if (process.env.NODE_ENV === 'test') done();
 
         sql.connect(config).then(function () {
             new sql.Request().query('select TOP 1 * from cubesensors_data').then(function (recordset) {

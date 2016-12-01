@@ -24,7 +24,7 @@ export default (router, store, passport, auth) => {
         const data = await store.getSensorStatuses();
         res.json(data);
     }));
-    
+
     router.get('/data', auth, wrap(async (req, res) => {
         const skip = req.query.skip || 0;
         const take = req.query.take || 1;
@@ -47,5 +47,12 @@ export default (router, store, passport, auth) => {
 
         const data = await store.getAvg(sensorId, field, minutes);
         res.json(data);
-    })); 
+    }));
+
+    router.get('/haspeople/:sensor_id', auth, wrap(async (req, res) => {
+        const sensorId = req.params.sensor_id;
+
+        const data = await store.hasPeople(sensorId);
+        res.json(data);
+    }));
 };

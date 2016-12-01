@@ -71,6 +71,8 @@ $ curl "localhost:8080/api/status"
 $ curl "localhost:8080/api/sensors"
 # Average for specified field from last x minutes (latest data is from the beginning of 2016, so minutes must be high)
 $ curl "localhost:8080/api/avg/Temperature/000D6F0003141E14?minutes=1440000"
+# Room with sensor has people (100 yes, 0 no)
+$ curl "localhost:8080/api/haspeople/000D6F0003141E14"
 ```
 
 ## Azure deployment

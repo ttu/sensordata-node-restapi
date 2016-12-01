@@ -75,6 +75,12 @@ class Store {
 
         return await callAsync(query);
     }
+
+    async hasPeople(sensorId) {
+        const query = knex.raw(`DECLARE @result int EXEC @result = dbo.get_has_people '${sensorId}' SELECT 'result' = @result`);
+        var result = await callAsync(query);
+        return result[0].result;
+    }
 }
 
 export default Store;

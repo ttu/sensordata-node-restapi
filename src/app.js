@@ -39,11 +39,11 @@ const authFunc = (username, password, done) => {
 
 const passport = initPassport(app, authFunc);
 
-const authMidFunc = config.auth == 'local'
+const authMidFunc = config.auth === 'local'
     ? passport.authenticate('local', { failureRedirect: '/login', successRedirect: '/' })
     : passport.authenticate('basic', { session: false });
 
-const authMiddleware = env === "development" && auth === "off"
+const authMiddleware = auth === "off"
     ? (req, res, next) => next()
     : authMidFunc;
 
