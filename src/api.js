@@ -26,16 +26,18 @@ export default (router, store, passport, auth) => {
     }));
 
     router.get('/data', auth, wrap(async (req, res) => {
-        const skip = req.query.skip || 0;
-        const take = req.query.take || 1;
+        const skip = parseInt(req.query.skip) || 0;
+        const take = parseInt(req.query.take) || 1;
+        
         const data = await store.getAllData(take, skip);
         res.json(data);
     }));
 
     router.get('/data/:sensor_id', auth, wrap(async (req, res) => {
         const id = req.params.sensor_id;
-        const skip = req.query.skip || 0;
-        const take = req.query.take || 1;
+        const skip = parseInt(req.query.skip) || 0;
+        const take = parseInt(req.query.take) || 1;
+
         const data = await store.getSensorData(id, take, skip);
         res.json(data);
     }));
@@ -43,7 +45,7 @@ export default (router, store, passport, auth) => {
     router.get('/avg/:field_id/:sensor_id', auth, wrap(async (req, res) => {
         const sensorId = req.params.sensor_id;
         const field = req.params.field_id;
-        const minutes = req.query.minutes || 60;
+        const minutes = parseInt(req.query.minutes) || 60;
 
         const data = await store.getAvg(sensorId, field, minutes);
         res.json(data);
