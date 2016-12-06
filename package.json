@@ -32,10 +32,8 @@
   "dependencies": {
     "babel-runtime": "^6.6.1",
     "body-parser": "^1.15.0",
-    "connect-ensure-login": "^0.1.1",
     "cookie-parser": "^1.4.1",
     "express": "^4.13.4",
-    "express-session": "^1.13.0",
     "knex": "^0.11.7",
     "moment": "^2.12.0",
     "morgan": "^1.7.0",

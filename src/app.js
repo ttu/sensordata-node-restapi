@@ -2,7 +2,6 @@ import express from 'express';
 import morgan from 'morgan';
 import cookieParser from 'cookie-parser';
 import bodyParser from 'body-parser';
-import expressSession from 'express-session';
 import socketio from 'socket.io';
 import moment from 'moment';
 import defineRoutes from './api';
@@ -25,7 +24,6 @@ app.use(require("morgan")("combined", { "stream": logger.stream }));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(expressSession({ secret: 'sensor-key-data', resave: false, saveUninitialized: false }));
 
 const store = new Store();
 
@@ -91,9 +89,9 @@ let devTemp = 20;
 const ioFunc = env === "development"
     ? () => {
         devTemp += Math.random() * 0.02 * (Math.random() < 0.5 ? -1 : 1);
-        io.emit('message', `000D6F0003141E14 - ${devTemp}`)
+        io.emit('message', `000D6F0003141E14 - ${devTemp}`);
     }
-    : sendNewStauses
+    : sendNewStauses;
 
 setInterval(ioFunc, 15000);
 
